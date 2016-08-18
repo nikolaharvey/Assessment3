@@ -7,7 +7,6 @@ public class Player : MonoBehaviour {
 
     // Health and damage variables
     public float health = 1000;
-    public float playerDamage = 100;
 
     // Movement variables
     public Rigidbody PlayerRB;
@@ -19,7 +18,6 @@ public class Player : MonoBehaviour {
     private float fireTimer;
     public GameObject projectile;
     public GameObject muzzle;
-    public GameObject turret;
 	
 
 
@@ -45,6 +43,7 @@ public class Player : MonoBehaviour {
             fireTimer = Time.time + fireSpeed;
         }
     }
+
 
 
     void FixedUpdate()
@@ -79,6 +78,7 @@ public class Player : MonoBehaviour {
         // Kill the player when health reaches 0
         if (health <= 0)
         {
+            // ADD DEATH EFFECT
             gameManager.playerAlive = false;
             Destroy(this.gameObject);
         }

@@ -2,7 +2,6 @@
 using System.Collections;
 
 public class GroundEnemy : BaseEnemy {
-
 	// Use this for initialization
 	void Start () {
 	
