@@ -3,6 +3,8 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
+    public bool playerAlive = true;
+
 	// Use this for initialization
 	void Start () {
 	
