@@ -10,46 +10,73 @@ public class Player : MonoBehaviour {
     public float playerDamage = 100;
 
     // Movement variables
-    public Rigidbody rb;
-    public float moveForce = 1000f;
-    public float rotationSpeed = 500f;
+    public Rigidbody PlayerRB;
+    public float moveForce = 10000f;
+    public float rotationSpeed = 100f;
 
-	// Use this for initialization
+    //Weapon variables
+    public float fireSpeed = 1.0f;
+    private float fireTimer;
+    public GameObject projectile;
+    public GameObject muzzle;
+    public GameObject turret;
+	
+
+
 	void Start () {
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 	
-	// Update is called once per frame
+
+	
 	void Update () {
-        
+        Shoot();
 	}
+
+    void Shoot()
+    {
+        // When left mouse button is clicked, fire projectile/shoot
+        if (Input.GetMouseButtonDown (0) && Time.time > fireTimer)
+        {
+            // Fire projectile
+            Instantiate(projectile, muzzle.transform.position, muzzle.transform.rotation);
+            
+            // Reset the fireTimer
+            fireTimer = Time.time + fireSpeed;
+        }
+    }
+
 
     void FixedUpdate()
     {
-        movement();
+        Movement();
     }
 
-    public void movement()
+
+
+    public void Movement()
     {
         // Forward and backward movements
         if (Input.GetKey("w"))
-            rb.AddRelativeForce(Vector3.forward * moveForce * Time.fixedDeltaTime);
+            PlayerRB.AddRelativeForce(Vector3.forward * moveForce * Time.fixedDeltaTime);
         else if (Input.GetKey("s"))
-            rb.AddRelativeForce(Vector3.back * moveForce * Time.fixedDeltaTime);
+            PlayerRB.AddRelativeForce(Vector3.back * moveForce * Time.fixedDeltaTime);
 
         // Left and right movements
         if (Input.GetKey("a"))
-            rb.AddRelativeForce(Vector3.left * -rotationSpeed * Time.fixedDeltaTime);
+            transform.Rotate(Vector3.up * -rotationSpeed * Time.fixedDeltaTime);
         else if (Input.GetKey("d"))
-            rb.AddRelativeForce(Vector3.right * rotationSpeed * Time.fixedDeltaTime);
+            transform.Rotate(Vector3.up * rotationSpeed * Time.fixedDeltaTime);
     }
+
+
 
     public void takeDamage()
     {
         // Taking damage
         //health -= enemyDamage;
         
-        // Killing the player
+        // Kill the player when health reaches 0
         if (health <= 0)
         {
             gameManager.playerAlive = false;
